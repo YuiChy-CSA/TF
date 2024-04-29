@@ -26,7 +26,7 @@ if (reg1.test($request.url)) {
     $persistentStore.write(ua, 'tf_ua')
     console.log($request.headers)
     if ($persistentStore.read('request_id') !== null) {
-      $notification.post('Thông tin TF đã lấy', 'Lấy thông tin thành công, vui lòng đóng script!','')
+      $notification.post('Thông tin TF đã lấy', 'Lấy thông tin thành công, vui lòng đóng APP!','')
 
     } else {
       $notification.post('Thông tin TF không lấy được','Lấy thông tin không thành công, vui lòng bật Mitm over HTTP2, khởi động lại VPN và ứng dụng TestFlight!','')
