@@ -1,5 +1,6 @@
 #!Tên = Tự động tham gia TestFlight
 #!Mô tả = Tự động giám sát danh sách chỗ trống trong TestFlight và tham gia ngay khi có chỗ trống mới.
+#!openUrl = 
 #!Tác giả = YuiChy
 #!Nguồn = https://gitlab.com/lodepuly/vpn_tool/-/tree/master/Tool/Loon/Plugin
 #!Biểu tượng = https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png
