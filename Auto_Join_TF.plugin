@@ -5,9 +5,9 @@
 #!Nguồn = https://gitlab.com/lodepuly/vpn_tool/-/tree/master/Tool/Loon/Plugin
 #!Biểu tượng = https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png
 #!Đầu vào = APP_ID
-#!Ngày = 2024-03-07 22:10:30
+#!Ngày = 2024-04-29 20:10:00
 
-[Quy tắc]
+[Rule]
 DOMAIN, testflight.apple.com, PROXY
 
 [Script]
