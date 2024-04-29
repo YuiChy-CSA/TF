@@ -1,0 +1,18 @@
+#!Tên = Tự động tham gia TestFlight
+#!Mô tả = Tự động giám sát danh sách chỗ trống trong TestFlight và tham gia ngay khi có chỗ trống mới.
+#!Tác giả = YuiChy
+#!Nguồn = https://gitlab.com/lodepuly/vpn_tool/-/tree/master/Tool/Loon/Plugin
+#!Biểu tượng = https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png
+#!Đầu vào = APP_ID
+#!Ngày = 2024-03-07 22:10:30
+
+[Quy tắc]
+DOMAIN, testflight.apple.com, PROXY
+
+[Script]
+http-request ^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$ script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/TF_keys.js, tag = Lấy thông tin TF
+http-request ^https://testflight.apple.com/join/(.*) script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/TF_keys.js, tag = Lấy APP_ID
+cron "*/1 * * * * *" script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/Auto_join_TF.js, tag = Tự động tham gia TF, timeout = 180
+
+[Mitm]
+hostname = testflight.apple.com
