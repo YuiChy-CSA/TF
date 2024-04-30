@@ -2,7 +2,6 @@
 Tác giả script: DecoAri
 Người sửa chữa: YuiChy
 Nguồn: https://raw.githubusercontent.com/DecoAri/JavaScript/main/Surge/Auto_join_TF.js
-Cảm ơn một người đã chuyển đổi thành script cho Loon!
 
 */
 
@@ -28,7 +27,7 @@ function autoPost(ID) {
     'X-Session-Id': `${$persistentStore.read('session_id')}`,
     'X-Session-Digest': `${$persistentStore.read('session_digest')}`,
     'X-Request-Id': `${$persistentStore.read('request_id')}`,
-    'User-Agent': `${$persistentStore.read('tf_ua')}`,
+    //'User-Agent': `${$persistentStore.read('tf_ua')}`,
   }
   return new Promise(function (resolve) {
     $httpClient.get({ url: testurl + ID, headers: header }, function (error, resp, data) {
