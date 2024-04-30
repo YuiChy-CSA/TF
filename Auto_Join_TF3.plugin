@@ -9,8 +9,8 @@
 DOMAIN, testflight.apple.com, PROXY
 
 [Script]
-http-request ^https://testflight.apple.com/join/(.*) script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/TF_keys3.js, tag = Lấy APP_ID
 http-request ^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$ script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/TF_keys3.js, tag = Lấy thông tin TF
+http-request ^https://testflight.apple.com/join/(.*) script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/TF_keys3.js, tag = Lấy APP_ID
 cron "*/1 * * * * *" script-path = https://raw.githubusercontent.com/YuiChy-CSA/TF/main/Auto_join_TF3.js, tag = Tự động tham gia TF, timeout = 180
 
 [Mitm]
