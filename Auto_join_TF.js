@@ -1,72 +1,78 @@
 /*
 Script Author: Yui Chy
 Source: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Resource/Script/TestFlight/Auto_join_TF.js
+Source: https://raw.githubusercontent.com/manhseo/TF_Trap/main/QX/AutoJoinTF.js
 */
 
 !(async () => {
-  let ids = $persistentStore.read('APP_ID');
-  if (ids == null) {
-    $notification.post('Chưa thêm TestFlight APP_ID', 'Vui lòng thêm hoặc sử dụng liên kết TestFlight để tự động lấy', '');
-  } else if (ids == '') {
-    $notification.post('Đã tham gia hết tất cả TestFlight', 'Vui lòng tắt plugin này thủ công', '');
+  ids = $prefs.valueForKey("APP_ID");
+  if (ids == "") {
+    $notify("Đã thêm tất cả TF", "Vui lòng đóng thủ công", "");
+    $done();
   } else {
-    ids = ids.split(',');
-    for await (const ID of ids) {
-      await autoPost(ID);
+    ids = ids.split(",");
+    try {
+      for await (const ID of ids) {
+        await autoPost(ID);
+      }
+    } catch (error) {
+      console.log(error);
+      $done();
     }
   }
   $done();
 })();
 
 function autoPost(ID) {
-  let Key = $persistentStore.read('key');
-  let testurl = 'https://testflight.apple.com/v3/accounts/' + Key + '/ru/';
+  let Key = $prefs.valueForKey("key");
+  let testurl = "https://testflight.apple.com/v3/accounts/" + Key + "/ru/";
   let header = {
-    'X-Session-Id': `${$persistentStore.read('session_id')}`,
-    'X-Session-Digest': `${$persistentStore.read('session_digest')}`,
-    'X-Request-Id': `${$persistentStore.read('request_id')}`,
-    'User-Agent': `${$persistentStore.read('tf_ua')}`,
+    "X-Session-Id": `${$prefs.valueForKey("session_id")}`,
+    "X-Session-Digest": `${$prefs.valueForKey("session_digest")}`,
+    "X-Request-Id": `${$prefs.valueForKey("request_id")}`,
   };
-
   return new Promise(function (resolve) {
-    $httpClient.get({ url: testurl + ID, headers: header }, function (error, resp, data) {
-      if (error == null) {
+    $task.fetch({ url: testurl + ID, method: "GET", headers: header }).then(
+      (resp) => {
+        const { body: data } = resp;
         if (resp.status == 404) {
-          let ids = $persistentStore.read('APP_ID').split(',');
-          ids = ids.filter(ids => ids !== ID);
-          $persistentStore.write(ids.toString(), 'APP_ID');
-          console.log(ID + ' ' + 'Không tồn tại TestFlight này, đã tự động xóa APP_ID này');
-          $notification.post(ID, 'Không tồn tại TestFlight', 'Đã tự động xóa APP_ID này');
+          ids = $prefs.valueForKey("APP_ID").split(",");
+          ids = ids.filter((ids) => ids !== ID);
+          $prefs.setValueForKey(ids.toString(), "APP_ID");
+          console.log(ID + " " + "Không tìm thấy TF và APP_ID đã bị xóa tự động");
+          $notify(ID, "Không tìm thấy TF", "APP_ID đã bị xóa tự động");
           resolve();
         } else {
           let jsonData = JSON.parse(data);
           if (jsonData.data == null) {
-            console.log(ID + ' ' + jsonData.messages[0].message);
+            console.log(ID + " " + jsonData.messages[0].message);
             resolve();
-          } else if (jsonData.data.status == 'FULL') {
-            console.log(jsonData.data.app.name + ' ' + ID + ' ' + jsonData.data.message);
+          } else if (jsonData.data.status == "FULL") {
+            console.log(ID + " " + jsonData.data.message);
             resolve();
           } else {
-            $httpClient.post({ url: testurl + ID + '/accept', headers: header }, function (error, resp, body) {
+            $task.fetch({ url: testurl + ID + "/accept", method: "POST", headers: header }).then((res) => {
+              const { body } = res;
               let jsonBody = JSON.parse(body);
-              $notification.post(jsonBody.data.name, 'Tham gia TestFlight thành công', '');
-              console.log(jsonBody.data.name + ' Tham gia TestFlight thành công');
-              let ids = $persistentStore.read('APP_ID').split(',');
-              ids = ids.filter(ids => ids !== ID);
-              $persistentStore.write(ids.toString(), 'APP_ID');
+              $notify(jsonBody.data.name, "Tham gia TestFlight thành công", "");
+              console.log(jsonBody.data.name + " Tham gia TestFlight thành công");
+              ids = $prefs.valueForKey("APP_ID").split(",");
+              ids = ids.filter((ids) => ids !== ID);
+              $prefs.setValueForKey(ids.toString(), "APP_ID");
               resolve();
             });
           }
         }
-      } else {
-        if (error == 'The request timed out.') {
+      },
+      (error) => {
+        if (error == "The request timed out.") {
           resolve();
         } else {
-          $notification.post('Tự động tham gia TestFlight', error, '');
-          console.log(ID + ' ' + error);
+          $notify("Tự động tham gia TF", error, "");
+          console.log(ID + " " + error);
           resolve();
         }
       }
-    });
+    );
   });
 }
