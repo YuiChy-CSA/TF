@@ -6,19 +6,13 @@ Source: https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/AutoJoinTF.js
 const $ = new Env('𝐓𝐞𝐬𝐭𝐅𝐥𝐢𝐠𝐡𝐭 Tự động tham gia');
 $.isRequest = () => 'undefined' != typeof $request;
 const [
-    // ----------
-    // Tham số TF
     Key,
     SessionId,
     SessionDigest,
     RequestId,
-    // ----------
-    // Tham số ứng dụng
     APP_ID_Str,
-    // ----------
-    // Tham số cấu hình
-    LOON_COUNT = 1, // Số lần lặp lại trong mỗi lần thực thi, mặc định là 1
-    INTERVAL = 0 // Thời gian chờ, đơn vị: giây, mặc định là 0
+    LOON_COUNT = 1,
+    INTERVAL = 0
 ] = ['tf_key', 'tf_session_id', 'tf_session_digest', 'tf_request_id', 'tf_app_ids', 'tf_loon_count', 'tf_interval'].map((key) => $.getdata(key));
 var APP_IDS = APP_ID_Str ? APP_ID_Str.split(',') : [];
 const baseURL = `https://testflight.apple.com/v3/accounts/${Key}/ru/`;
@@ -43,7 +37,6 @@ const getParams = () => {
             $.msg($.name, '', `ID ứng dụng: ${appId} đã tồn tại, không cần thêm.`);
         }
     };
-    // Mở TF APP để lấy thông tin tham số
     if (/^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$/.test(url)) {
         const headers = Object.fromEntries(Object.entries(header).map(([key, value]) => [key.toLowerCase(), value]));
         const session_id = headers['x-session-id'];
@@ -57,7 +50,6 @@ const getParams = () => {
         const encrypt = (str) => str.slice(0, 4) + '***********';
         $.msg($.name, 'Lấy tham số TF thành công', `𝐬𝐞𝐬𝐬𝐢𝐨𝐧_𝐢𝐝: ${encrypt(session_id)}\n𝐬𝐞𝐬𝐬𝐢𝐨𝐧_𝐝𝐢𝐠𝐞𝐬𝐭: ${encrypt(session_digest)}\n𝐫𝐞𝐪𝐮𝐞𝐬𝐭_𝐢𝐝: ${encrypt(request_id)}\n𝐤𝐞𝐲: ${encrypt(key)}`);
     }
-    // Mở liên kết cần thu thập tham số
     else if (/^https:\/\/testflight\.apple\.com\/join\/([A-Za-z0-9]+)$/.test(url)) {
         const appIdMatch = url.match(/^https:\/\/testflight\.apple\.com\/join\/([A-Za-z0-9]+)$/);
         if (appIdMatch && appIdMatch[1]) {
@@ -73,7 +65,6 @@ const getParams = () => {
     }
 };
 
-// Kiểm tra ứng dụng TF
 const TF_Check = (app_id) => {
     return new Promise((resolve, reject) => {
         $.get({ url: baseURL + app_id, headers }, (error, response, data) => {
@@ -95,7 +86,6 @@ const TF_Check = (app_id) => {
     });
 };
 
-// Tham gia ứng dụng TF
 const TF_Join = (app_id) => {
     return new Promise((resolve, reject) => {
         $.post(
@@ -118,7 +108,6 @@ const TF_Join = (app_id) => {
     });
 };
 
-// Hàm tự động thực thi
 (async () => {
     if ($.isRequest()) return getParams();
     if (!Key || !SessionId || !SessionDigest || !RequestId) return $.msg('Thiếu tham số', 'Vui lòng lấy tham số trước');
