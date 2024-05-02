@@ -11,8 +11,8 @@
       "author": "@Yuichancsa",
       "script": "https://raw.githubusercontent.com/YuiChy-CSA/TF/main/Auto_join_TF_boxjs.js",
       "icons": [
-        "https://raw.githubusercontent.com/YuiChy-CSA/TF/main/Auto_join_TF.js",
-        "https://raw.githubusercontent.com/YuiChy-CSA/TF/main/Auto_join_TF.js"
+        "https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png",
+        "https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png"
       ],
       "keys": [
         "session_id",
