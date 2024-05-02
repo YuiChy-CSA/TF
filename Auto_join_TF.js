@@ -1,8 +1,6 @@
-/*
-Script Author: Yui Chy
-Source: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Resource/Script/TestFlight/Auto_join_TF.js
-Source: https://raw.githubusercontent.com/manhseo/TF_Trap/main/QX/AutoJoinTF.js
-*/
+//*********************************
+// */1 * * * * * https://raw.githubusercontent.com/chouchoui/QuanX/master/Scripts/testflight/Auto_join_TF.js, tag=TestFlight自动加入, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png, enabled=true
+//*********************************
 
 !(async () => {
   ids = $prefs.valueForKey("APP_ID");
