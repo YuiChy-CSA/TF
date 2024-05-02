@@ -1,5 +1,6 @@
 /*
 Script Author: Yui Chy
+Source: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Resource/Script/TestFlight/Auto_join_TF.js
 */
 
 !(async () => {
