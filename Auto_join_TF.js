@@ -1,11 +1,12 @@
-//*********************************
-// */1 * * * * * https://raw.githubusercontent.com/chouchoui/QuanX/master/Scripts/testflight/Auto_join_TF.js, tag=TestFlight自动加入, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png, enabled=true
-//*********************************
+/*
+Script Author: Yui Chy
+Source: https://raw.githubusercontent.com/manhseo/TF_Trap/main/QX/AutoJoinTF.js
+*/
 
 !(async () => {
   ids = $prefs.valueForKey("APP_ID");
   if (ids == "") {
-    $notify("All TFs have been added", "Please close manually", "");
+    $notify("Đã thêm tất cả TF", "Vui lòng đóng thủ công", "");
     $done();
   } else {
     ids = ids.split(",");
@@ -37,8 +38,8 @@ function autoPost(ID) {
           ids = $prefs.valueForKey("APP_ID").split(",");
           ids = ids.filter((ids) => ids !== ID);
           $prefs.setValueForKey(ids.toString(), "APP_ID");
-          console.log(ID + " " + "The TF does not exist and the APP_ID has been automatically deleted");
-          $notify(ID, "The TF does not exist", "The APP_ID has been automatically deleted");
+          console.log(ID + " " + "Không tìm thấy TF và APP_ID đã bị xóa tự động");
+          $notify(ID, "Không tìm thấy TF", "APP_ID đã bị xóa tự động");
           resolve();
         } else {
           let jsonData = JSON.parse(data);
@@ -52,8 +53,8 @@ function autoPost(ID) {
             $task.fetch({ url: testurl + ID + "/accept", method: "POST", headers: header }).then((res) => {
               const { body } = res;
               let jsonBody = JSON.parse(body);
-              $notify(jsonBody.data.name,"TestFlight joined successfully", "");
-              console.log(jsonBody.data.name + " TestFlight加入成功");
+              $notify(jsonBody.data.name, "Tham gia TestFlight thành công", "");
+              console.log(jsonBody.data.name + " Tham gia TestFlight thành công");
               ids = $prefs.valueForKey("APP_ID").split(",");
               ids = ids.filter((ids) => ids !== ID);
               $prefs.setValueForKey(ids.toString(), "APP_ID");
@@ -66,7 +67,7 @@ function autoPost(ID) {
         if (error == "The request timed out.") {
           resolve();
         } else {
-          $notify("Automatically join TF", error, "");
+          $notify("Tự động tham gia TF", error, "");
           console.log(ID + " " + error);
           resolve();
         }
