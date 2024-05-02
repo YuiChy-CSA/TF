@@ -1,5 +1,5 @@
 {
-  "id": "testflight.app.sub",
+  "id": "githubdulong.app.sub",
   "name": "Tự động tham gia TF",
   "author": "@Yuichancsa",
   "icon": "https://avatars.githubusercontent.com/u/49412868",
@@ -9,7 +9,7 @@
       "id": "Auto_join_TF",
       "name": "Giám sát TestFlight",
       "author": "@Yuichancsa",
-      "script": "https://raw.githubusercontent.com/YuiChy-CSA/TF/main/Auto_join_TF_boxjs.js",
+      "script": "https://raw.githubusercontent.com/githubdulong/Script/master/Auto_join_TF.js",
       "icons": [
         "https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png",
         "https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png"
