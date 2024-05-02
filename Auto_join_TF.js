@@ -7,7 +7,7 @@ Source: https://raw.githubusercontent.com/manhseo/TF_Trap/main/QX/AutoJoinTF.js
 !(async () => {
   ids = $prefs.valueForKey("APP_ID");
   if (ids == "") {
-    $notify("Đã thêm tất cả TF", "Vui lòng đóng thủ công", "");
+    $notify("All TFs have been added", "Please close manually", "");
     $done();
   } else {
     ids = ids.split(",");
@@ -39,8 +39,8 @@ function autoPost(ID) {
           ids = $prefs.valueForKey("APP_ID").split(",");
           ids = ids.filter((ids) => ids !== ID);
           $prefs.setValueForKey(ids.toString(), "APP_ID");
-          console.log(ID + " " + "Không tìm thấy TF và APP_ID đã bị xóa tự động");
-          $notify(ID, "Không tìm thấy TF", "APP_ID đã bị xóa tự động");
+          console.log(ID + " " + "The TF does not exist and the APP_ID has been automatically deleted");
+          $notify(ID, "The TF does not exist", "The APP_ID has been automatically deleted");
           resolve();
         } else {
           let jsonData = JSON.parse(data);
@@ -54,8 +54,8 @@ function autoPost(ID) {
             $task.fetch({ url: testurl + ID + "/accept", method: "POST", headers: header }).then((res) => {
               const { body } = res;
               let jsonBody = JSON.parse(body);
-              $notify(jsonBody.data.name, "Tham gia TestFlight thành công", "");
-              console.log(jsonBody.data.name + " Tham gia TestFlight thành công");
+              $notify(jsonBody.data.name,"TestFlight joined successfully", "");
+              console.log(jsonBody.data.name + " TestFlight加入成功");
               ids = $prefs.valueForKey("APP_ID").split(",");
               ids = ids.filter((ids) => ids !== ID);
               $prefs.setValueForKey(ids.toString(), "APP_ID");
@@ -68,7 +68,7 @@ function autoPost(ID) {
         if (error == "The request timed out.") {
           resolve();
         } else {
-          $notify("Tự động tham gia TF", error, "");
+          $notify("Automatically join TF", error, "");
           console.log(ID + " " + error);
           resolve();
         }
