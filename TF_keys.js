@@ -1,5 +1,6 @@
 /*
 Script Author: Yui Chy
+Source: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Resource/Script/TestFlight/TF_keys.js
 */
 
 const reg1 = /^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$/;
