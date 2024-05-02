@@ -2,8 +2,8 @@
 Script Author: Yui Chy
 */
 
-const reg1 = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/(.*)\/apps$/;
-const reg2 = /^https:\/\/testflight\.apple\.com\/join\/(.*)/;
+const reg1 = /^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$/;
+const reg2 = /^https:\/\/testflight\.apple\.com\/join\/(.*)$/;
 
 if (reg1.test($request.url)) {
     $persistentStore.write(null, 'request_id');
